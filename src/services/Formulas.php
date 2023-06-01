@@ -9,7 +9,6 @@ namespace craft\commerce\services;
 
 use Craft;
 use craft\base\Component;
-use craft\helpers\ArrayHelper;
 use craft\helpers\Json;
 use craft\web\twig\Environment;
 use Twig\Error\SyntaxError;
@@ -100,10 +99,14 @@ class Formulas extends Component
             throw new SyntaxError('Tags are not allowed in a condition formula.');
         }
 
-        $cacheKey = 'formula:' . md5($formula) . '|params:' . md5(Json::encode($params));
+        $cacheKey = [
+            'formula' => md5($formula),
+            'params' => md5(Json::encode($params)),
+        ];
 
-        if (Craft::$app->getCache()->exists($cacheKey)) {
-            return (bool)Craft::$app->getCache()->get($cacheKey);
+        $cachedResult = Craft::$app->getCache()->get($cacheKey);
+        if ($cachedResult !== false) {
+            return $cachedResult === 'TRUE';
         }
 
         $twigCode = '{% if ';
@@ -112,10 +115,10 @@ class Formulas extends Component
 
         $template = $this->_twigEnv->createTemplate($twigCode, $name);
         $output = $template->render($params);
-        $result = ($output == 'TRUE');
-        Craft::$app->getCache()->set($cacheKey, $result);
 
-        return $result;
+        Craft::$app->getCache()->set($cacheKey, $output);
+
+        return $output === 'TRUE';
     }
 
     /**

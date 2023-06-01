@@ -22,7 +22,6 @@ use craft\helpers\ArrayHelper;
 use LitEmoji\LitEmoji;
 use yii\base\Component;
 use yii\base\InvalidArgumentException;
-use yii\caching\TagDependency;
 use yii\db\Exception;
 use yii\db\Expression;
 
@@ -414,18 +413,7 @@ class Addresses extends Component
             $conditionFormula = $zone->getZipCodeConditionFormula();
             $zipCode = $address->zipCode;
 
-            $cacheKey = get_class($zone) . ':' . $conditionFormula . ':' . $zipCode;
-
-            if (Craft::$app->cache->exists($cacheKey)) {
-                $result = Craft::$app->cache->get($cacheKey);
-            } else {
-                $result = (bool)$formulasService->evaluateCondition($conditionFormula, ['zipCode' => $zipCode], 'Zip Code condition formula matching address');
-                Craft::$app->cache->set($cacheKey, $result, null, new TagDependency(['tags' => get_class($zone) . ':' . $zone->id]));
-            }
-
-            if (!$result) {
-                return false;
-            }
+            return (bool)$formulasService->evaluateCondition($conditionFormula, ['zipCode' => $zipCode], 'Zip Code condition formula matching address');
         }
 
         return true;

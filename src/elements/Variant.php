@@ -224,7 +224,7 @@ class Variant extends Purchasable
     /**
      * @var bool $hasUnlimitedStock
      */
-    public $hasUnlimitedStock;
+    public $hasUnlimitedStock = false;
 
     /**
      * @var int $minQty
@@ -841,7 +841,7 @@ class Variant extends Purchasable
     /**
      * @inheritdoc
      */
-    public static function eagerLoadingMap(array $sourceElements, string $handle): array
+    public static function eagerLoadingMap(array $sourceElements, string $handle)
     {
         if ($handle == 'product') {
             // Get the source element IDs

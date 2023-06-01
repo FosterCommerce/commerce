@@ -1,5 +1,69 @@
 # Release Notes for Craft Commerce
 
+## 3.4.22 - 2023-05-31
+
+- Fixed a bug where querying for variants could yield unexpected results. ([#636](https://github.com/craftcms/feed-me/issues/636))
+
+## 3.4.21 - 2023-05-03
+
+- Craft Commerce now requires Dompdf 2.0.0 or later.
+
+## 3.4.20.1 - 2023-03-21
+
+### Fixed
+- Fixed a PHP error that occurred when using a third party shipping method. ([#3093](https://github.com/craftcms/commerce/issues/3093))
+
+## 3.4.20 - 2023-02-21
+
+- Fixed a bug that could occur when updating to Commerce 3.
+- Fixed a bug that could cause a large number of shipping rule category queries.
+- Fixed a PHP error that occurred when eager-loading variant fields.
+- Fixed a PHP error that occurred when calling `craft\commerce\services\ProductTypes::getEditableProductTypes()` while not signed in. 
+
+## 3.4.19 - 2022-11-23
+
+### Fixed
+- Fixed a bug where carts weren’t getting default billing and shipping addresses set after login when `autoSetNewCartAddresses` was enabled. ([#2903](https://github.com/craftcms/commerce/issues/2903))
+- Fixed an error that could occur when purging inactive carts.
+
+## 3.4.18 - 2022-10-26
+
+### Deprecated
+- Deprecated `craft\commerce\elements\Order::getShippingMethod()`. `$shippingMethodName` and `$shippingMethodHandle` should be used instead.
+
+### Fixed
+- Fixed a bug where custom shipping methods weren’t applying to orders properly. ([#2986](https://github.com/craftcms/commerce/issues/2986))
+- Fixed a bug where passing an invalid product type handle into product queries’ `type` params wouldn’t have any effect. ([#2966](https://github.com/craftcms/commerce/issues/2966))
+
+## 3.4.17.2 - 2022-09-16
+
+### Fixed
+- Fixed a bug where partial elements were not being deleted during garbage collection.
+- Fixed a bug where orders’ item subtotals weren’t being saved to the database.
+
+## 3.4.17.1 - 2022-08-30
+
+### Fixed
+- Fixed a bug where the incorrect version number was being shown after updating.
+
+## 3.4.17 - 2022-08-30
+
+### Deprecated
+- Deprecated `craft\commerce\services\Orders::pruneDeletedField()`.
+- Deprecated `craft\commerce\services\ProductType::pruneDeletedField()`.
+- Deprecated `craft\commerce\services\Subscriptions::pruneDeletedField()`.
+
+### Fixed
+- Fixed a bug where condition formula results were being cached incorrectly. ([#2842](https://github.com/craftcms/commerce/issues/2842))
+- Fixed a bug where not all project config changes would be applied if a field or site was deleted. ([craftcms/cms#9567](https://github.com/craftcms/cms/issues/9567))
+
+## 3.4.16 - 2022-08-05
+
+### Fixed
+- Fixed a bug where address zone condition formulas were being cached incorrectly. ([#2842](https://github.com/craftcms/commerce/issues/2842))
+- Fixed a bug where querying for orders by email would return incorrect results on PostgreSQL.
+- Fixed a bug where clearing a date from a discount would also clear out its usage count. ([#2819](https://github.com/craftcms/commerce/issues/2819))
+
 ## 3.4.15 - 2022-05-16
 
 ### Changed
